@@ -22,10 +22,10 @@
         }
 
         :root {
-            --background-color: #1e272e; /* Dark mode as default */
-            --text-color: #d2dae2;
-            --calendar-bg: #2f3640;
-            --calendar-shadow: rgba(0, 0, 0, 0.3);
+            --background-color: #ffffff; /* Day mode as default */
+            --text-color: #333333;
+            --calendar-bg: #f4f4f4;
+            --calendar-shadow: rgba(0, 0, 0, 0.1);
             --button-bg: #3b85d4;
             --button-hover-bg: #2769a8;
             --event-bg-manager: #44bd32;
@@ -33,7 +33,7 @@
             --event-bg-key-holder: #e67e22;
             --event-bg-brand-rep: #3b85d4;
             --event-text-color: #fff;
-            --header-bg: #2c3e50;
+            --header-bg: #f0f0f0;
         }
 
         .header {
@@ -44,7 +44,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #34495e;
+            border-bottom: 1px solid #ccc;
         }
 
         h1 {
@@ -123,7 +123,7 @@
         }
 
         .fc-today {
-            background-color: #3a3f44 !important;
+            background-color: #e9ecef !important;
         }
 
         .fc-daygrid-event {
@@ -184,11 +184,11 @@
         }
     </style>
 </head>
-<body class="dark-mode"> <!-- Night mode is default -->
+<body> <!-- Day mode is now the default -->
 
     <div class="header">
         <h1>Hollister</h1>
-        <button id="theme-toggle">Switch to Day Mode</button>
+        <button id="theme-toggle">Switch to Night Mode</button>
     </div>
     <div id="calendar-container">
         <div id="calendar"></div>
