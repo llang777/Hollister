@@ -7,20 +7,80 @@
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet' />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
     <style>
+        /* Global Styles */
         body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
         }
-        #calendar {
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        #calendar-container {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
             max-width: 900px;
+            width: 100%;
+        }
+
+        #calendar {
+            max-width: 100%;
             margin: 0 auto;
+        }
+
+        /* FullCalendar Customization */
+        .fc-toolbar {
+            margin-bottom: 20px;
+        }
+
+        .fc-button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 15px;
+            font-size: 14px;
+            margin: 0 5px;
+            transition: background-color 0.3s;
+        }
+
+        .fc-button:hover {
+            background-color: #2980b9;
+        }
+
+        .fc-today {
+            background-color: #ecf0f1 !important;
+        }
+
+        .fc-daygrid-event {
+            background-color: #2ecc71;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 12px;
+            color: #fff;
         }
     </style>
 </head>
 <body>
 
     <h1>HotSchedules Clone</h1>
-    <div id='calendar'></div>
+    <div id="calendar-container">
+        <div id="calendar"></div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
