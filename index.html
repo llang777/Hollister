@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shift Calendar</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="calendar-container">
+        <h1>Shift Calendar</h1>
+        <div id="calendar">
+            <!-- Add some sample days -->
+            <div class="day" onclick="showPopup('2024-08-16')">16</div>
+            <div class="day" onclick="showPopup('2024-08-17')">17</div>
+            <div class="day" onclick="showPopup('2024-08-18')">18</div>
+            <div class="day" onclick="showPopup('2024-08-19')">19</div>
+            <div class="day" onclick="showPopup('2024-08-20')">20</div>
+        </div>
+    </div>
+
+    <div id="popup-container">
+        <div id="popup">
+            <span class="close" onclick="hidePopup()">&times;</span>
+            <h2 id="popup-date">August 16, 2024</h2>
+            <div class="shift-info">
+                <h3>Shift Type: Store Manager</h3>
+                <p>3 shifts</p>
+                <p>Time Slots: 9:00 AM - 12:00 PM, 1:00 PM - 4:00 PM</p>
+            </div>
+            <div class="shift-info">
+                <h3>Shift Type: Assistant Manager</h3>
+                <p>2 shifts</p>
+                <p>Time Slots: 10:00 AM - 1:00 PM, 2:00 PM - 5:00 PM</p>
+            </div>
+            <div class="shift-info">
+                <h3>Shift Type: Key Holder</h3>
+                <p>4 shifts</p>
+                <p>Time Slots: 8:00 AM - 11:00 AM, 12:00 PM - 3:00 PM</p>
+            </div>
+            <div class="shift-info">
+                <h3>Shift Type: Brand Rep</h3>
+                <p>5 shifts</p>
+                <p>Time Slots: 9:00 AM - 12:00 PM, 1:00 PM - 4:00 PM</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
