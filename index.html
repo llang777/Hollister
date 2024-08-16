@@ -19,21 +19,37 @@
             align-items: center;
             height: 100vh;
             flex-direction: column;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         :root {
-            --background-color: #ffffff; /* Day mode as default */
-            --text-color: #333333;
-            --calendar-bg: #f4f4f4;
-            --calendar-shadow: rgba(0, 0, 0, 0.1);
-            --button-bg: #3b85d4;
-            --button-hover-bg: #2769a8;
-            --event-bg-manager: #44bd32;
-            --event-bg-assistant-manager: #e74c3c;
-            --event-bg-key-holder: #e67e22;
-            --event-bg-brand-rep: #3b85d4;
+            /* Day Mode Variables */
+            --background-color: #f0f0f0;
+            --text-color: #333;
+            --calendar-bg: #ffffff;
+            --header-bg: #ffffff;
+            --header-border-color: #ccc;
+            --button-bg: #007bff;
+            --button-hover-bg: #0056b3;
+            --event-bg-manager: #28a745;
+            --event-bg-assistant-manager: #dc3545;
+            --event-bg-key-holder: #ffc107;
+            --event-bg-brand-rep: #17a2b8;
             --event-text-color: #fff;
-            --header-bg: #f0f0f0;
+
+            /* Night Mode Variables */
+            --background-color-night: #1e272e;
+            --text-color-night: #d2dae2;
+            --calendar-bg-night: #2f3640;
+            --header-bg-night: #2c3e50;
+            --header-border-color-night: #3a3f44;
+            --button-bg-night: #3b85d4;
+            --button-hover-bg-night: #2769a8;
+            --event-bg-manager-night: #44bd32;
+            --event-bg-assistant-manager-night: #e74c3c;
+            --event-bg-key-holder-night: #f39c12;
+            --event-bg-brand-rep-night: #3498db;
+            --event-text-color-night: #fff;
         }
 
         .header {
@@ -44,7 +60,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #ccc;
+            border-bottom: 1px solid var(--header-border-color);
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         h1 {
@@ -57,6 +74,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             flex-grow: 1;
+            transition: color 0.3s;
         }
 
         #theme-toggle {
@@ -67,7 +85,7 @@
             padding: 8px 15px;
             font-size: 12px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, color 0.3s;
             margin-left: 10px;
         }
 
@@ -77,13 +95,14 @@
 
         #calendar-container {
             background-color: var(--calendar-bg);
-            box-shadow: 0 4px 8px var(--calendar-shadow);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             padding: 10px;
             max-width: 100%;
             width: 100%;
             height: calc(100vh - 60px); /* Adjust based on header and padding */
             box-sizing: border-box;
+            transition: background-color 0.3s;
         }
 
         #calendar {
@@ -115,7 +134,7 @@
             padding: 8px 12px;
             font-size: 12px;
             margin: 3px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .fc-button:hover {
@@ -132,6 +151,7 @@
             padding: 5px;
             font-size: 10px;
             color: var(--event-text-color);
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .fc-event-manager {
@@ -148,6 +168,22 @@
 
         .fc-event-brand-rep {
             background-color: var(--event-bg-brand-rep);
+        }
+
+        /* Night Mode */
+        body.dark-mode {
+            --background-color: var(--background-color-night);
+            --text-color: var(--text-color-night);
+            --calendar-bg: var(--calendar-bg-night);
+            --header-bg: var(--header-bg-night);
+            --header-border-color: var(--header-border-color-night);
+            --button-bg: var(--button-bg-night);
+            --button-hover-bg: var(--button-hover-bg-night);
+            --event-bg-manager: var(--event-bg-manager-night);
+            --event-bg-assistant-manager: var(--event-bg-assistant-manager-night);
+            --event-bg-key-holder: var(--event-bg-key-holder-night);
+            --event-bg-brand-rep: var(--event-bg-brand-rep-night);
+            --event-text-color: var(--event-text-color-night);
         }
 
         /* Mobile Optimization */
@@ -219,16 +255,8 @@
                 const isDarkMode = document.body.classList.toggle('dark-mode');
                 if (isDarkMode) {
                     toggleButton.textContent = 'Switch to Day Mode';
-                    document.documentElement.style.setProperty('--background-color', '#1e272e');
-                    document.documentElement.style.setProperty('--text-color', '#d2dae2');
-                    document.documentElement.style.setProperty('--calendar-bg', '#2f3640');
-                    document.documentElement.style.setProperty('--header-bg', '#2c3e50');
                 } else {
                     toggleButton.textContent = 'Switch to Night Mode';
-                    document.documentElement.style.setProperty('--background-color', '#ffffff');
-                    document.documentElement.style.setProperty('--text-color', '#333333');
-                    document.documentElement.style.setProperty('--calendar-bg', '#f4f4f4');
-                    document.documentElement.style.setProperty('--header-bg', '#f0f0f0');
                 }
             });
 
