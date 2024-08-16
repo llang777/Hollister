@@ -29,6 +29,7 @@
             --button-bg: #3b85d4;
             --button-hover-bg: #2769a8;
             --event-bg-manager: #44bd32;
+            --event-bg-assistant-manager: #e74c3c;
             --event-bg-key-holder: #e67e22;
             --event-bg-brand-rep: #3b85d4;
             --event-text-color: #fff;
@@ -59,6 +60,16 @@
         /* FullCalendar Customization */
         .fc-toolbar {
             margin-bottom: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .fc-button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .fc-button {
@@ -68,7 +79,7 @@
             border-radius: 4px;
             padding: 8px 12px;
             font-size: 12px;
-            margin: 0 3px;
+            margin: 3px;
             transition: background-color 0.3s;
         }
 
@@ -90,6 +101,10 @@
 
         .fc-event-manager {
             background-color: var(--event-bg-manager);
+        }
+
+        .fc-event-assistant-manager {
+            background-color: var(--event-bg-assistant-manager);
         }
 
         .fc-event-key-holder {
@@ -144,6 +159,8 @@
 
             .fc-toolbar-title {
                 font-size: 1rem;
+                text-align: center;
+                width: 100%;
             }
 
             .fc-daygrid-event {
@@ -177,7 +194,10 @@
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
-                events: generateEvents()
+                events: generateEvents(),
+                eventClick: function(info) {
+                    alert(`Title: ${info.event.title}\nName: ${info.event.extendedProps.name}\nShift Type: ${info.event.extendedProps.shiftType}\nShift Length: ${info.event.extendedProps.shiftLength}`);
+                }
             });
 
             calendar.render();
@@ -196,14 +216,15 @@
             function generateEvents() {
                 const events = [];
                 const shiftTimes = {
-                    'Opening Shift': ['08:00', '18:00'],
-                    'Mid Shift': ['10:00', '19:00'],
-                    'Closing Shift': ['12:00', '21:00']
+                    'Opening Shift': ['08:00', '18:00', '10 hours'],
+                    'Mid Shift': ['10:00', '19:00', '9 hours'],
+                    'Closing Shift': ['12:00', '21:00', '9 hours']
                 };
                 const roles = [
-                    { title: 'Store Manager', className: 'fc-event-manager', hours: 40 },
-                    { title: 'Key Holder', className: 'fc-event-key-holder', hours: 30 },
-                    { title: 'Brand Rep', className: 'fc-event-brand-rep', hours: 8 }
+                    { title: 'Store Manager', className: 'fc-event-manager', hours: 40, name: 'John Doe' },
+                    { title: 'Assistant Manager', className: 'fc-event-assistant-manager', hours: 40, name: 'Jane Smith' },
+                    { title: 'Key Holder', className: 'fc-event-key-holder', hours: 30, name: 'Alice Johnson' },
+                    { title: 'Brand Rep', className: 'fc-event-brand-rep', hours: 8, name: 'Bob Brown' }
                 ];
 
                 let startDate = new Date('2024-08-01');
@@ -212,33 +233,57 @@
                 for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
                     const dateStr = d.toISOString().split('T')[0];
 
-                    // Schedule for Store Manager (40 hours/week)
-                    for (let shift in shiftTimes) {
-                        events.push({
-                            title: `Store Manager (${shift})`,
-                            start: `${dateStr}T${shiftTimes[shift][0]}`,
-                            end: `${dateStr}T${shiftTimes[shift][1]}`,
-                            className: 'fc-event-manager'
-                        });
-                    }
+                    // Schedule for Store Manager (once per day)
+                    events.push({
+                        title: `Store Manager (Opening Shift)`,
+                        start: `${dateStr}T${shiftTimes['Opening Shift'][0]}`,
+                        end: `${dateStr}T${shiftTimes['Opening Shift'][1]}`,
+                        className: 'fc-event-manager',
+                        extendedProps: {
+                            name: 'John Doe',
+                            shiftType: 'Opening Shift',
+                            shiftLength: shiftTimes['Opening Shift'][2]
+                        }
+                    });
 
-                    // Schedule for Key Holder (25-35 hours/week)
+                    // Schedule for Assistant Manager (once per day)
+                    events.push({
+                        title: `Assistant Manager (Mid Shift)`,
+                        start: `${dateStr}T${shiftTimes['Mid Shift'][0]}`,
+                        end: `${dateStr}T${shiftTimes['Mid Shift'][1]}`,
+                        className: 'fc-event-assistant-manager',
+                        extendedProps: {
+                            name: 'Jane Smith',
+                            shiftType: 'Mid Shift',
+                            shiftLength: shiftTimes['Mid Shift'][2]
+                        }
+                    });
+
+                    // Schedule for Key Holder (daily Mid Shift)
                     events.push({
                         title: `Key Holder (Mid Shift)`,
                         start: `${dateStr}T${shiftTimes['Mid Shift'][0]}`,
                         end: `${dateStr}T${shiftTimes['Mid Shift'][1]}`,
-                        className: 'fc-event-key-holder'
+                        className: 'fc-event-key-holder',
+                        extendedProps: {
+                            name: 'Alice Johnson',
+                            shiftType: 'Mid Shift',
+                            shiftLength: shiftTimes['Mid Shift'][2]
+                        }
                     });
 
-                    // Schedule for Brand Rep (1 shift/week)
-                    if (d.getDay() === 2 || d.getDay() === 4) {  // Randomly choosing days for Brand Rep
-                        events.push({
-                            title: `Brand Rep (Closing Shift)`,
-                            start: `${dateStr}T${shiftTimes['Closing Shift'][0]}`,
-                            end: `${dateStr}T${shiftTimes['Closing Shift'][1]}`,
-                            className: 'fc-event-brand-rep'
-                        });
-                    }
+                    // Schedule for Brand Rep (daily Closing Shift)
+                    events.push({
+                        title: `Brand Rep (Closing Shift)`,
+                        start: `${dateStr}T${shiftTimes['Closing Shift'][0]}`,
+                        end: `${dateStr}T${shiftTimes['Closing Shift'][1]}`,
+                        className: 'fc-event-brand-rep',
+                        extendedProps: {
+                            name: 'Bob Brown',
+                            shiftType: 'Closing Shift',
+                            shiftLength: shiftTimes['Closing Shift'][2]
+                        }
+                    });
                 }
 
                 return events;
