@@ -28,7 +28,9 @@
             --calendar-shadow: rgba(0, 0, 0, 0.1);
             --button-bg: #3498db;
             --button-hover-bg: #2980b9;
-            --event-bg: #2ecc71;
+            --event-bg-manager: #2ecc71;
+            --event-bg-key-holder: #e67e22;
+            --event-bg-brand-rep: #3498db;
             --event-text-color: #fff;
         }
 
@@ -40,7 +42,9 @@
             --calendar-shadow: rgba(0, 0, 0, 0.3);
             --button-bg: #3b85d4;
             --button-hover-bg: #2769a8;
-            --event-bg: #44bd32;
+            --event-bg-manager: #44bd32;
+            --event-bg-key-holder: #e67e22;
+            --event-bg-brand-rep: #3b85d4;
             --event-text-color: #fff;
         }
 
@@ -89,12 +93,23 @@
         }
 
         .fc-daygrid-event {
-            background-color: var(--event-bg);
             border: none;
             border-radius: 4px;
             padding: 5px 10px;
             font-size: 12px;
             color: var(--event-text-color);
+        }
+
+        .fc-event-manager {
+            background-color: var(--event-bg-manager);
+        }
+
+        .fc-event-key-holder {
+            background-color: var(--event-bg-key-holder);
+        }
+
+        .fc-event-brand-rep {
+            background-color: var(--event-bg-brand-rep);
         }
 
         /* Toggle Button */
@@ -157,23 +172,7 @@
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
-                events: [
-                    {
-                        title: 'Morning Shift',
-                        start: '2024-08-18T08:00:00',
-                        end: '2024-08-18T14:00:00'
-                    },
-                    {
-                        title: 'Evening Shift',
-                        start: '2024-08-18T15:00:00',
-                        end: '2024-08-18T21:00:00'
-                    },
-                    {
-                        title: 'Day Off',
-                        start: '2024-08-19'
-                    },
-                    // Add more filler data as needed
-                ]
+                events: generateEvents()
             });
 
             calendar.render();
@@ -188,6 +187,57 @@
                     toggleButton.textContent = 'Switch to Night Mode';
                 }
             });
+
+            function generateEvents() {
+                const events = [];
+                const shiftTimes = {
+                    'Opening Shift': ['08:00', '18:00'],
+                    'Mid Shift': ['10:00', '19:00'],
+                    'Closing Shift': ['12:00', '21:00']
+                };
+                const roles = [
+                    { title: 'Store Manager', className: 'fc-event-manager', hours: 40 },
+                    { title: 'Key Holder', className: 'fc-event-key-holder', hours: 30 },
+                    { title: 'Brand Rep', className: 'fc-event-brand-rep', hours: 8 }
+                ];
+
+                let startDate = new Date('2024-08-01');
+                let endDate = new Date('2024-08-31');
+
+                for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
+                    const dateStr = d.toISOString().split('T')[0];
+
+                    // Schedule for Store Manager (40 hours/week)
+                    for (let shift in shiftTimes) {
+                        events.push({
+                            title: `Store Manager (${shift})`,
+                            start: `${dateStr}T${shiftTimes[shift][0]}`,
+                            end: `${dateStr}T${shiftTimes[shift][1]}`,
+                            className: 'fc-event-manager'
+                        });
+                    }
+
+                    // Schedule for Key Holder (25-35 hours/week)
+                    events.push({
+                        title: `Key Holder (Mid Shift)`,
+                        start: `${dateStr}T${shiftTimes['Mid Shift'][0]}`,
+                        end: `${dateStr}T${shiftTimes['Mid Shift'][1]}`,
+                        className: 'fc-event-key-holder'
+                    });
+
+                    // Schedule for Brand Rep (1 shift/week)
+                    if (d.getDay() === 2 || d.getDay() === 4) {  // Randomly choosing days for Brand Rep
+                        events.push({
+                            title: `Brand Rep (Closing Shift)`,
+                            start: `${dateStr}T${shiftTimes['Closing Shift'][0]}`,
+                            end: `${dateStr}T${shiftTimes['Closing Shift'][1]}`,
+                            className: 'fc-event-brand-rep'
+                        });
+                    }
+                }
+
+                return events;
+            }
         });
     </script>
 
