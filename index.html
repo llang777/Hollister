@@ -10,8 +10,8 @@
         /* Global Styles */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f6f8;
-            color: #333;
+            background-color: var(--background-color);
+            color: var(--text-color);
             margin: 0;
             padding: 0;
             display: flex;
@@ -21,15 +21,38 @@
             flex-direction: column;
         }
 
+        :root {
+            --background-color: #f4f6f8;
+            --text-color: #333;
+            --calendar-bg: #fff;
+            --calendar-shadow: rgba(0, 0, 0, 0.1);
+            --button-bg: #3498db;
+            --button-hover-bg: #2980b9;
+            --event-bg: #2ecc71;
+            --event-text-color: #fff;
+        }
+
+        /* Dark Mode Variables */
+        body.dark-mode {
+            --background-color: #1e272e;
+            --text-color: #d2dae2;
+            --calendar-bg: #2f3640;
+            --calendar-shadow: rgba(0, 0, 0, 0.3);
+            --button-bg: #3b85d4;
+            --button-hover-bg: #2769a8;
+            --event-bg: #44bd32;
+            --event-text-color: #fff;
+        }
+
         h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
-            color: #2c3e50;
+            color: var(--text-color);
         }
 
         #calendar-container {
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: var(--calendar-bg);
+            box-shadow: 0 4px 8px var(--calendar-shadow);
             border-radius: 8px;
             padding: 20px;
             max-width: 900px;
@@ -47,8 +70,8 @@
         }
 
         .fc-button {
-            background-color: #3498db;
-            color: #fff;
+            background-color: var(--button-bg);
+            color: var(--event-text-color);
             border: none;
             border-radius: 4px;
             padding: 10px 15px;
@@ -58,7 +81,7 @@
         }
 
         .fc-button:hover {
-            background-color: #2980b9;
+            background-color: var(--button-hover-bg);
         }
 
         .fc-today {
@@ -66,17 +89,58 @@
         }
 
         .fc-daygrid-event {
-            background-color: #2ecc71;
+            background-color: var(--event-bg);
             border: none;
             border-radius: 4px;
             padding: 5px 10px;
             font-size: 12px;
-            color: #fff;
+            color: var(--event-text-color);
+        }
+
+        /* Toggle Button */
+        #theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: var(--button-bg);
+            color: var(--event-text-color);
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #theme-toggle:hover {
+            background-color: var(--button-hover-bg);
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+
+            #calendar-container {
+                padding: 10px;
+            }
+
+            .fc-button {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .fc-toolbar-title {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
 <body>
 
+    <button id="theme-toggle">Switch to Night Mode</button>
     <h1>HotSchedules Clone</h1>
     <div id="calendar-container">
         <div id="calendar"></div>
@@ -113,6 +177,17 @@
             });
 
             calendar.render();
+
+            // Toggle theme functionality
+            var toggleButton = document.getElementById('theme-toggle');
+            toggleButton.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                if (document.body.classList.contains('dark-mode')) {
+                    toggleButton.textContent = 'Switch to Day Mode';
+                } else {
+                    toggleButton.textContent = 'Switch to Night Mode';
+                }
+            });
         });
     </script>
 
