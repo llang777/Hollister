@@ -3,161 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Shift Calendar</title>
-    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.6/main.min.css" rel="stylesheet" />
+    <title>HotSchedules Clone</title>
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-        }
-
-        #calendar-container {
-            width: 100%;
-            max-width: 600px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 16px;
-        }
-
-        #popup-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #popup {
-            background-color: white;
-            border-radius: 8px;
             padding: 20px;
-            width: 90%;
-            max-width: 400px;
         }
-
-        .close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        h2 {
-            margin-top: 0;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .shift-info {
-            margin-bottom: 16px;
-        }
-
-        .shift-info h3 {
-            margin: 0;
-            font-size: 18px;
-        }
-
-        .shift-info p {
-            margin: 4px 0;
-            font-size: 14px;
+        #calendar {
+            max-width: 900px;
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
 
-<div id="calendar-container">
-    <div id="calendar"></div>
-</div>
+    <h1>HotSchedules Clone</h1>
+    <div id='calendar'></div>
 
-<div id="popup-container">
-    <div id="popup">
-        <span class="close" onclick="hidePopup()">&times;</span>
-        <h2 id="popup-date">Shift Details</h2>
-        <div class="shift-info">
-            <h3>Shift Type: Store Manager</h3>
-            <p>2 shifts</p>
-            <p>Time Slots: 9:00 AM - 12:00 PM, 1:00 PM - 4:00 PM</p>
-        </div>
-        <div class="shift-info">
-            <h3>Shift Type: Assistant Manager</h3>
-            <p>3 shifts</p>
-            <p>Time Slots: 10:00 AM - 1:00 PM, 2:00 PM - 5:00 PM</p>
-        </div>
-        <div class="shift-info">
-            <h3>Shift Type: Key Holder</h3>
-            <p>1 shift</p>
-            <p>Time Slots: 8:00 AM - 11:00 AM</p>
-        </div>
-        <div class="shift-info">
-            <h3>Shift Type: Brand Rep</h3>
-            <p>4 shifts</p>
-            <p>Time Slots: 12:00 PM - 3:00 PM, 4:00 PM - 7:00 PM</p>
-        </div>
-    </div>
-</div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
 
-<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.6/main.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.6/main.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            selectable: true,
-            dateClick: function(info) {
-                showPopup(info.dateStr);
-            },
-            events: [
-                {
-                    title: 'Store Manager',
-                    start: '2024-08-16',
-                    end: '2024-08-16',
-                    backgroundColor: '#007bff'
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
-                {
-                    title: 'Assistant Manager',
-                    start: '2024-08-17',
-                    end: '2024-08-17',
-                    backgroundColor: '#28a745'
-                },
-                {
-                    title: 'Key Holder',
-                    start: '2024-08-18',
-                    end: '2024-08-18',
-                    backgroundColor: '#ffc107'
-                },
-                {
-                    title: 'Brand Rep',
-                    start: '2024-08-19',
-                    end: '2024-08-19',
-                    backgroundColor: '#dc3545'
-                }
-            ]
+                events: [
+                    {
+                        title: 'Morning Shift',
+                        start: '2024-08-18T08:00:00',
+                        end: '2024-08-18T14:00:00'
+                    },
+                    {
+                        title: 'Evening Shift',
+                        start: '2024-08-18T15:00:00',
+                        end: '2024-08-18T21:00:00'
+                    },
+                    {
+                        title: 'Day Off',
+                        start: '2024-08-19'
+                    },
+                    // Add more filler data as needed
+                ]
+            });
+
+            calendar.render();
         });
-        calendar.render();
-    });
-
-    function showPopup(date) {
-        document.getElementById('popup-date').textContent = `Shift Details for ${date}`;
-        document.getElementById('popup-container').style.display = 'flex';
-    }
-
-    function hidePopup() {
-        document.getElementById('popup-container').style.display = 'none';
-    }
-</script>
+    </script>
 
 </body>
 </html>
