@@ -240,10 +240,12 @@
                     'Closing Shift': ['12:00', '21:00', '9 hours']
                 };
                 const roles = [
-                    { title: 'Store Manager', className: 'fc-event-manager', hours: 40, name: 'John Doe' },
-                    { title: 'Assistant Manager', className: 'fc-event-assistant-manager', hours: 40, name: 'Jane Smith' },
-                    { title: 'Key Holder', className: 'fc-event-key-holder', hours: 30, name: 'Alice Johnson' },
-                    { title: 'Brand Rep', className: 'fc-event-brand-rep', hours: 8, name: 'Bob Brown' }
+                    { title: 'Store Manager', className: 'fc-event-manager', hours: 40, name: 'Sara' },
+                    { title: 'Assistant Manager', className: 'fc-event-assistant-manager', hours: 40, name: 'Laura' },
+                    { title: 'Key Holder', className: 'fc-event-key-holder', hours: 30, name: 'Kyle' },
+                    { title: 'Key Holder', className: 'fc-event-key-holder', hours: 30, name: 'Jonathan' },
+                    { title: 'Brand Rep', className: 'fc-event-brand-rep', hours: 8, name: 'Bob Brown' },
+                    { title: 'Brand Rep', className: 'fc-event-brand-rep', hours: 8, name: 'Alice Green' }
                 ];
 
                 let startDate = new Date('2024-08-01');
@@ -259,7 +261,7 @@
                         end: `${dateStr}T${shiftTimes['Opening Shift'][1]}`,
                         className: 'fc-event-manager',
                         extendedProps: {
-                            name: 'John Doe',
+                            name: 'Sara',
                             shiftType: 'Opening Shift',
                             shiftLength: shiftTimes['Opening Shift'][2]
                         }
@@ -272,26 +274,38 @@
                         end: `${dateStr}T${shiftTimes['Mid Shift'][1]}`,
                         className: 'fc-event-assistant-manager',
                         extendedProps: {
-                            name: 'Jane Smith',
+                            name: 'Laura',
                             shiftType: 'Mid Shift',
                             shiftLength: shiftTimes['Mid Shift'][2]
                         }
                     });
 
-                    // Schedule for Key Holder (daily Mid Shift)
+                    // Schedule for Key Holders (daily Mid Shift)
                     events.push({
                         title: `Key Holder (Mid Shift)`,
                         start: `${dateStr}T${shiftTimes['Mid Shift'][0]}`,
                         end: `${dateStr}T${shiftTimes['Mid Shift'][1]}`,
                         className: 'fc-event-key-holder',
                         extendedProps: {
-                            name: 'Alice Johnson',
+                            name: 'Kyle',
                             shiftType: 'Mid Shift',
                             shiftLength: shiftTimes['Mid Shift'][2]
                         }
                     });
 
-                    // Schedule for Brand Rep (daily Closing Shift)
+                    events.push({
+                        title: `Key Holder (Mid Shift)`,
+                        start: `${dateStr}T${shiftTimes['Mid Shift'][0]}`,
+                        end: `${dateStr}T${shiftTimes['Mid Shift'][1]}`,
+                        className: 'fc-event-key-holder',
+                        extendedProps: {
+                            name: 'Jonathan',
+                            shiftType: 'Mid Shift',
+                            shiftLength: shiftTimes['Mid Shift'][2]
+                        }
+                    });
+
+                    // Schedule for Brand Reps (daily Closing Shift)
                     events.push({
                         title: `Brand Rep (Closing Shift)`,
                         start: `${dateStr}T${shiftTimes['Closing Shift'][0]}`,
@@ -299,6 +313,18 @@
                         className: 'fc-event-brand-rep',
                         extendedProps: {
                             name: 'Bob Brown',
+                            shiftType: 'Closing Shift',
+                            shiftLength: shiftTimes['Closing Shift'][2]
+                        }
+                    });
+
+                    events.push({
+                        title: `Brand Rep (Closing Shift)`,
+                        start: `${dateStr}T${shiftTimes['Closing Shift'][0]}`,
+                        end: `${dateStr}T${shiftTimes['Closing Shift'][1]}`,
+                        className: 'fc-event-brand-rep',
+                        extendedProps: {
+                            name: 'Alice Green',
                             shiftType: 'Closing Shift',
                             shiftLength: shiftTimes['Closing Shift'][2]
                         }
